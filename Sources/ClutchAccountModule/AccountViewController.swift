@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
-
+import ClutchCoreKit
 
 class AccountViewController : UIViewController {
     lazy var presenter : ViewToPresenterAccontProtocol = AccountPresenter(view: self)
@@ -18,100 +18,6 @@ class AccountViewController : UIViewController {
         imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         return imageView
-    }()
-    
-    
-    private lazy var appNameTitleLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Clutch"
-        label.font = UIFont.systemFont(ofSize: 29, weight: .semibold)
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var welcomemleLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Welcome Back"
-        label.font = UIFont.systemFont(ofSize: 35, weight: .semibold)
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var subinfoLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Enter your login information"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        label.textColor = .darkGray
-        return label
-    }()
-    
-    
-    private lazy var googleButton: UIButton = {
-        var config = UIButton.Configuration.filled()
-        config.title = "Google"
-        config.titleAlignment = .center
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-            var outgoing = incoming
-            outgoing.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-            outgoing.foregroundColor = UIColor.black
-            return outgoing
-        }
-        
-        let originalImage = UIImage(resource: .googleIcon)
-        let resizedImage = originalImage.resize(to: CGSize(width: 20, height: 20))
-        config.image = resizedImage
-        config.imagePlacement = .leading
-        config.imagePadding = 8
-        
-        config.baseBackgroundColor = .white
-        config.cornerStyle = .medium // köşe yarıçapı
-        config.baseForegroundColor = .black
-        
-        let button = UIButton(configuration: config, primaryAction: nil)
-        button.layer.cornerRadius = 15
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.addTarget(self, action: #selector(googleTapped), for: .touchUpInside)
-        return button
-        
-    }()
-    
-    
-    private let emailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Email Address"
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        return label
-    }()
-    
-    private let emailTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Email Address"
-        tf.borderStyle = .roundedRect
-        tf.layer.cornerRadius = 10
-        return tf
-    }()
-    
-    private let passwordLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Password"
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        return label
-    }()
-    
-    private let passwordTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Password"
-        tf.borderStyle = .roundedRect
-        tf.isSecureTextEntry = true
-        return tf
-    }()
-    
-    private let togglePasswordButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-        button.tintColor = .black
-        return button
     }()
     
     
@@ -128,90 +34,94 @@ class AccountViewController : UIViewController {
     }()
     
     
-    private lazy var orLabel : UILabel = {
-        let label = UILabel()
-        label.text = "OR"
-        label.textColor = .lightGray
-        label.textAlignment = .center
-        return label
+    private lazy var appNameTitleLabel = LabelFactory.createLabel(ofType: .title,text: "Clutch")
+    
+    private lazy var welcomemleLabel = LabelFactory.createLabel(ofType: .largeTitle, text: "Welcome Back")
+    
+    private lazy var subinfoLabel = LabelFactory.createLabel(ofType: .body, text: "Enter your login information")
+    
+    private lazy var emailLabel = LabelFactory.createLabel(ofType: .subBody, text: "Email Address")
+    
+    private lazy var passwordLabel = LabelFactory.createLabel(ofType: .subBody, text: "Password")
+  
+    
+    
+    
+    private lazy var googleButton = ButtonFactory.createButton(ofType: .buttonWithImageResource(image: .googleIcon, title: "Google", action: googleButtonAction, color: .black, backColor: .white))
+    
+    
+    private lazy var googleButtonAction : UIAction = UIAction { _ in
+        print("googleButtonAction")
+     }
+    
+    private lazy var appleButton = ButtonFactory.createButton(
+        ofType: .buttonWithImageResource(image: .appleIcon, title: "Apple", action: appleButtonAction, color: .black, backColor: .white))
+    
+    private lazy var appleButtonAction : UIAction = UIAction { _ in
+        print("apple button aciton")
+    }
+    
+    
+    private let emailTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Email Address"
+        tf.borderStyle = .roundedRect
+        tf.layer.cornerRadius = 10
+        return tf
+    }()
+    
+ 
+    
+    private let passwordTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Password"
+        tf.borderStyle = .roundedRect
+        tf.isSecureTextEntry = true
+        return tf
     }()
     
     
-    private lazy var appleButton: UIButton = {
-        var config = UIButton.Configuration.filled()
-        config.title = "Apple"
-        config.titleAlignment = .center
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-            var outgoing = incoming
-            outgoing.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-            outgoing.foregroundColor = UIColor.black
-            return outgoing
-        }
-        
-        let originalImage = UIImage(resource: .appleIcon)
-        let resizedImage = originalImage.resize(to: CGSize(width: 20, height: 20))
-        config.image = resizedImage
-        config.imagePlacement = .leading
-        config.imagePadding = 8
-        
-        config.baseBackgroundColor = .white
-        config.cornerStyle = .medium
-        config.baseForegroundColor = .black
-        
-        let button = UIButton(configuration: config, primaryAction: nil)
-        button.layer.cornerRadius = 15
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.addTarget(self, action: #selector(appleTapped), for: .touchUpInside)
-        return button
-    }()
+    private lazy var togglePasswordButton = ButtonFactory.createButton(ofType: .buttonWithOnlyImageSN(image: "eye.slash", action: togglePasswordButtonAction, backColor: .white))
     
-    private let nohaveAccountLabel: UILabel = {
-            let label = UILabel()
-            label.text = "Don't have an account"
-            label.textColor = .darkGray
-            label.font = UIFont.systemFont(ofSize: 14)
-            return label
-        }()
+    
+    private lazy var togglePasswordButtonAction : UIAction = UIAction { _ in
+        self.passwordTextField.isSecureTextEntry.toggle()
+        let imageName = self.passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
+        self.togglePasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+    
+    
+    private lazy var orLabel = LabelFactory.createLabel(ofType: .body, text: "OR")
+
+    
+    private lazy var nohaveAccountLabel = LabelFactory.createLabel(ofType: .subBody, text: "Don't have an account")
+  
+    
+    private lazy var toSignUpButton = ButtonFactory.createButton(ofType: .textButton(text: "Sign up", color: .black, action: toSignUpButtonAction))
+    
+    
+    private lazy var toSignUpButtonAction : UIAction = UIAction { _ in
+        print("toSignButton")
+     }
         
-        private let toSingUpButton: UIButton = {
-            let button = UIButton(type: .system)
-            let attributedTitle = NSAttributedString(
-                string: "Sign up",
-                attributes: [
-                    .foregroundColor: UIColor.black,
-                    .font: UIFont.systemFont(ofSize: 14, weight: .semibold),
-                    .underlineStyle: NSUnderlineStyle.single.rawValue
-                ]
-            )
-            button.addTarget(self, action: #selector(onTappedSingUp), for: .touchUpInside)
-            button.setAttributedTitle(attributedTitle, for: .normal)
-            return button
-        }()
     
-    private let loginButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 20
-        button.clipsToBounds = true
-        return button
-    }()
     
+    
+    private lazy var loginButton = ButtonFactory.createButton(ofType: .defaultButton(title: "Login", action: loginButtonAction))
+    
+    
+    private lazy var loginButtonAction : UIAction = UIAction { _ in
+        print("loginButtonAction")
+     }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
         configureUI()
-        setupActions()
-        //  setupViews()
+   
     }
-    
 
-    
-    private func setupActions() {
-        togglePasswordButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
-    }
     
     
     
@@ -227,13 +137,7 @@ class AccountViewController : UIViewController {
         print("On Tapped Sing Up bttn")
     }
     
-    @objc private func togglePasswordVisibility() {
-        passwordTextField.isSecureTextEntry.toggle()
-        let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
-        togglePasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
-    }
-    
-    
+
     private func configureUI() {
         view.addSubview(iconImage)
         iconImage.snp.makeConstraints { make in
@@ -336,11 +240,7 @@ class AccountViewController : UIViewController {
         
         view.addSubview(nohaveAccountLabel)
         
-      
-        view.addSubview(toSingUpButton)
-        
-        
-        let container = UIStackView(arrangedSubviews: [nohaveAccountLabel, toSingUpButton])
+        let container = UIStackView(arrangedSubviews: [nohaveAccountLabel, toSignUpButton])
         container.axis = .horizontal
         container.spacing = 4
         container.alignment = .center
@@ -350,8 +250,6 @@ class AccountViewController : UIViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
         }
-
-   
     }
 }
 
@@ -369,28 +267,4 @@ extension AccountViewController : PresenterToViewAccountProtocol {
 
 
 
-extension UIImage {
-    func resizeImage(targetSize: CGSize) -> UIImage {
-        let size = self.size
-        
-        let widthRatio  = targetSize.width  / size.width
-        let heightRatio = targetSize.height / size.height
-        
-        let newSize = CGSize(width: size.width * widthRatio, height: size.height * heightRatio)
-        
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        self.draw(in: CGRect(origin: CGPoint.zero, size: newSize))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage ?? self
-    }
-    
-    func resize(to size: CGSize) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        self.draw(in: CGRect(origin: .zero, size: size))
-        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return resizedImage
-    }
-}
+
