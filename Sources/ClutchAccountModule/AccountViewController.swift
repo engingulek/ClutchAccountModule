@@ -77,6 +77,44 @@ class AccountViewController : UIViewController {
     }()
     
     
+    private let emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Email Address"
+        label.font = .systemFont(ofSize: 16, weight: .medium)
+        return label
+    }()
+    
+    private let emailTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Email Address"
+        tf.borderStyle = .roundedRect
+        tf.layer.cornerRadius = 10
+        return tf
+    }()
+    
+    private let passwordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Password"
+        label.font = .systemFont(ofSize: 16, weight: .medium)
+        return label
+    }()
+    
+    private let passwordTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Password"
+        tf.borderStyle = .roundedRect
+        tf.isSecureTextEntry = true
+        return tf
+    }()
+    
+    private let togglePasswordButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
+    
+    
     private lazy var rightLine : UIView = {
         let view = UIView()
         view.backgroundColor =  .lightGray
@@ -128,12 +166,54 @@ class AccountViewController : UIViewController {
         return button
     }()
     
+    private let nohaveAccountLabel: UILabel = {
+            let label = UILabel()
+            label.text = "Don't have an account"
+            label.textColor = .darkGray
+            label.font = UIFont.systemFont(ofSize: 14)
+            return label
+        }()
+        
+        private let toSingUpButton: UIButton = {
+            let button = UIButton(type: .system)
+            let attributedTitle = NSAttributedString(
+                string: "Sign up",
+                attributes: [
+                    .foregroundColor: UIColor.black,
+                    .font: UIFont.systemFont(ofSize: 14, weight: .semibold),
+                    .underlineStyle: NSUnderlineStyle.single.rawValue
+                ]
+            )
+            button.addTarget(self, action: #selector(onTappedSingUp), for: .touchUpInside)
+            button.setAttributedTitle(attributedTitle, for: .normal)
+            return button
+        }()
+    
+    private let loginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
         configureUI()
-        
+        setupActions()
+        //  setupViews()
     }
+    
+
+    
+    private func setupActions() {
+        togglePasswordButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+    }
+    
+    
     
     @objc func googleTapped() {
         print("Google button tapped")
@@ -141,6 +221,16 @@ class AccountViewController : UIViewController {
     
     @objc func appleTapped() {
         print("Apple button tapped")
+    }
+    
+    @objc func onTappedSingUp() {
+        print("On Tapped Sing Up bttn")
+    }
+    
+    @objc private func togglePasswordVisibility() {
+        passwordTextField.isSecureTextEntry.toggle()
+        let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
+        togglePasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
     
@@ -204,6 +294,64 @@ class AccountViewController : UIViewController {
             make.right.equalToSuperview().offset(-20)
             make.height.equalTo(1)
         }
+        
+        view.addSubview(emailLabel)
+        emailLabel.snp.makeConstraints { make in
+            make.top.equalTo(orLabel.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20)
+        }
+        
+        view.addSubview(emailTextField)
+        emailTextField.snp.makeConstraints { make in
+            make.top.equalTo(emailLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(50)
+        }
+        
+        view.addSubview(passwordLabel)
+        
+        passwordLabel.snp.makeConstraints { make in
+            make.top.equalTo(emailTextField.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        view.addSubview(passwordTextField)
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(passwordLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(44)
+        }
+        
+        passwordTextField.rightView = togglePasswordButton
+        passwordTextField.rightViewMode = .always
+        
+        view.addSubview(loginButton)
+        loginButton.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
+            make.height.equalTo(50)
+            
+        }
+        
+        view.addSubview(nohaveAccountLabel)
+        
+      
+        view.addSubview(toSingUpButton)
+        
+        
+        let container = UIStackView(arrangedSubviews: [nohaveAccountLabel, toSingUpButton])
+        container.axis = .horizontal
+        container.spacing = 4
+        container.alignment = .center
+        view.addSubview(container)
+
+        container.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+        }
+
+   
     }
 }
 
