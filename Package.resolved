@@ -1,6 +1,15 @@
 {
-  "originHash" : "10db259a47d2564c882a54e8e9e788bf3fc2163df4da68cd151b97d386c16175",
+  "originHash" : "8aae315c49429cbef56666c775518e58b30225aa7e1fa772fd642a509e5a5b1a",
   "pins" : [
+    {
+      "identity" : "clutchcorekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/engingulek/ClutchCoreKit",
+      "state" : {
+        "revision" : "0804064231239978b78887928f6a55e6694cf2d4",
+        "version" : "0.1.6"
+      }
+    },
     {
       "identity" : "clutchviewcontrollerablekit",
       "kind" : "remoteSourceControl",
