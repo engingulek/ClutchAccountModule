@@ -1,0 +1,24 @@
+{
+  "originHash" : "10db259a47d2564c882a54e8e9e788bf3fc2163df4da68cd151b97d386c16175",
+  "pins" : [
+    {
+      "identity" : "clutchviewcontrollerablekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/engingulek/ClutchViewControllerAbleKit",
+      "state" : {
+        "revision" : "6806ea3280bd6c4ad6422ddba106ae793f0e3154",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit",
+      "state" : {
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
+        "version" : "5.7.1"
+      }
+    }
+  ],
+  "version" : 3
+}
