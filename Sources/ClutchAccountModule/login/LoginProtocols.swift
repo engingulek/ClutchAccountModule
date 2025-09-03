@@ -12,28 +12,28 @@ import ClutchViewControllerAbleKit
 
 typealias Kits = UIViewAble & SegueAble  & NavigationDesing
 
-protocol ViewToPresenterAccontProtocol {
-    var view : PresenterToViewAccountProtocol? {get}
+protocol ViewToPresenterLoginProtocol {
+    var view : PresenterToViewLoginProtocol? {get}
     func viewDidLoad()
 }
 
 
 
-protocol PresenterToViewAccountProtocol : AnyObject,Kits {
+protocol PresenterToViewLoginProtocol : AnyObject,Kits {
     
 }
 
 
-protocol PresenterToInteractorAccountProtocol {
+protocol PresenterToInteractorLoginProtocol {
     
 }
 
 
-protocol InteractorToPresenterAccountProtocol {
+protocol InteractorToPresenterLoginProtocol {
     
 }
 
 
-public protocol AccountRouterProtocol {
+public protocol LoginRouterProtocol {
     func createViewController() -> UIViewController
 }

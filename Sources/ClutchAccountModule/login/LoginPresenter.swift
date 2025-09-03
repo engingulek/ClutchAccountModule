@@ -5,17 +5,17 @@
 //  Created by Engin Gülek on 2.09.2025.
 //
 
-final class AccountPresenter {
-    weak var view : PresenterToViewAccountProtocol?
+final class LoginPresenter {
+    weak var view : PresenterToViewLoginProtocol?
     
-    init(view: PresenterToViewAccountProtocol?) {
+    init(view: PresenterToViewLoginProtocol?) {
         self.view = view
     }
     
 }
 
 
-extension AccountPresenter : ViewToPresenterAccontProtocol {
+extension LoginPresenter : ViewToPresenterLoginProtocol {
     func viewDidLoad() {
         
     }

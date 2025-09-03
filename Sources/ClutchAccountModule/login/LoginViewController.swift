@@ -1,5 +1,5 @@
 //
-//  AccountViewController.swift
+//  LoginViewController.swift
 //  ClutchAccountModule
 //
 //  Created by Engin Gülek on 2.09.2025.
@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 import ClutchCoreKit
 
-class AccountViewController : UIViewController {
-    lazy var presenter : ViewToPresenterAccontProtocol = AccountPresenter(view: self)
+class LoginViewController : UIViewController {
+    lazy var presenter : ViewToPresenterLoginProtocol = LoginPresenter(view: self)
     private lazy var iconImage : UIImageView  = {
         let imageView = UIImageView()
         imageView.image = UIImage(resource: .appIcon)
@@ -256,13 +256,13 @@ class AccountViewController : UIViewController {
 
 
 
-extension AccountViewController : PresenterToViewAccountProtocol {
+extension LoginViewController : PresenterToViewLoginProtocol {
     
 }
 
 
 #Preview {
-    AccountViewController()
+    LoginViewController()
 }
 
 
