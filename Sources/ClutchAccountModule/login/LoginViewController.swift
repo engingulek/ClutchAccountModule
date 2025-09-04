@@ -32,6 +32,10 @@ class LoginViewController : UIViewController {
 
 
 extension LoginViewController : PresenterToViewLoginProtocol {
+    func sendTextState(text:TextState) {
+            loginView.getText(text)
+    }
+    
     
 }
 

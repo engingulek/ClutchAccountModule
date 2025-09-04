@@ -20,7 +20,7 @@ protocol ViewToPresenterLoginProtocol {
 
 
 protocol PresenterToViewLoginProtocol : AnyObject,Kits {
-    
+    func sendTextState(text:TextState)
 }
 
 

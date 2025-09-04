@@ -36,20 +36,18 @@ class LoginView : BaseView<LoginViewController> {
     }()
     
     
-    private lazy var appNameTitleLabel = LabelFactory.createLabel(ofType: .title,text: "Clutch")
+    private lazy var appNameTitleLabel = LabelFactory.createLabel(ofType: .title,text: "")
     
-    private lazy var welcomemleLabel = LabelFactory.createLabel(ofType: .largeTitle, text: "Welcome Back")
+    private lazy var welcomemleLabel = LabelFactory.createLabel(ofType: .largeTitle, text: " ")
     
-    private lazy var subinfoLabel = LabelFactory.createLabel(ofType: .body, text: "Enter your login information")
+    private lazy var subinfoLabel = LabelFactory.createLabel(ofType: .body, text: "")
     
-    private lazy var emailLabel = LabelFactory.createLabel(ofType: .subBody, text: "Email Address")
+    private lazy var emailLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
     
-    private lazy var passwordLabel = LabelFactory.createLabel(ofType: .subBody, text: "Password")
+    private lazy var passwordLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
   
     
-    
-    
-    private lazy var googleButton = ButtonFactory.createButton(ofType: .buttonWithImageResource(image: .googleIcon, title: "Google", action: googleButtonAction, color: .black, backColor: .white))
+    private lazy var googleButton = ButtonFactory.createButton(ofType: .buttonWithImageResource(image: .googleIcon, title: "", action: googleButtonAction, color: .black, backColor: .white))
     
     
     private lazy var googleButtonAction : UIAction = UIAction { _ in
@@ -57,7 +55,7 @@ class LoginView : BaseView<LoginViewController> {
      }
     
     private lazy var appleButton = ButtonFactory.createButton(
-        ofType: .buttonWithImageResource(image: .appleIcon, title: "Apple", action: appleButtonAction, color: .black, backColor: .white))
+        ofType: .buttonWithImageResource(image: .appleIcon, title: "", action: appleButtonAction, color: .black, backColor: .white))
     
     private lazy var appleButtonAction : UIAction = UIAction { _ in
         print("apple button aciton")
@@ -66,8 +64,9 @@ class LoginView : BaseView<LoginViewController> {
     
     private let emailTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Email Address"
+        tf.keyboardType = .emailAddress
         tf.borderStyle = .roundedRect
+        tf.autocapitalizationType = .none
         tf.layer.cornerRadius = 10
         return tf
     }()
@@ -76,44 +75,32 @@ class LoginView : BaseView<LoginViewController> {
     
     private let passwordTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Password"
+        tf.autocapitalizationType = .none
         tf.borderStyle = .roundedRect
         tf.isSecureTextEntry = true
         return tf
     }()
     
-    
-    private lazy var togglePasswordButton = ButtonFactory.createButton(ofType: .buttonWithOnlyImageSN(image: "eye.slash", action: togglePasswordButtonAction, backColor: .white))
-    
-    
-    private lazy var togglePasswordButtonAction : UIAction = UIAction { _ in
-        self.passwordTextField.isSecureTextEntry.toggle()
-        let imageName = self.passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
-        self.togglePasswordButton.setImage(UIImage(systemName: imageName), for: .normal)
-    }
-    
-    
-    private lazy var orLabel = LabelFactory.createLabel(ofType: .body, text: "OR")
+    private lazy var orLabel = LabelFactory.createLabel(ofType: .body, text: "")
 
     
-    private lazy var nohaveAccountLabel = LabelFactory.createLabel(ofType: .subBody, text: "Don't have an account")
+    private lazy var nohaveAccountLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
   
     
-    private lazy var toSignUpButton = ButtonFactory.createButton(ofType: .textButton(text: "Sign up", color: .black, action: toSignUpButtonAction))
+    private lazy var toSignUpButton = ButtonFactory.createButton(ofType: .textButton(text: "",
+                                                                                     color: .black, action: toSignUpButtonAction))
     
     
     private lazy var toSignUpButtonAction : UIAction = UIAction { _ in
         print("toSignButton")
      }
     
-    private lazy var loginButton = ButtonFactory.createButton(ofType: .defaultButton(title: "Login", action: loginButtonAction))
+    private lazy var loginButton = ButtonFactory.createButton(ofType: .defaultButton(title: "", action: loginButtonAction))
     
     
     private lazy var loginButtonAction : UIAction = UIAction { _ in
         print("loginButtonAction")
      }
-    
-    
     
     override func setupView() {
         configureUI()
@@ -208,9 +195,6 @@ class LoginView : BaseView<LoginViewController> {
             make.height.equalTo(44)
         }
         
-        passwordTextField.rightView = togglePasswordButton
-        passwordTextField.rightViewMode = .always
-        
         addSubview(loginButton)
         loginButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(20)
@@ -232,5 +216,24 @@ class LoginView : BaseView<LoginViewController> {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
         }
+    }
+    
+    
+    func getText(_ text:TextState) {
+        appNameTitleLabel.text = text.appName
+        welcomemleLabel.text = text.loginTitle
+        subinfoLabel.text = text.loginSubTitle
+        emailLabel.text = text.emailAdressTitle
+        passwordLabel.text = text.passwordTitle
+        googleButton.setTitle(text.googleButtonTitle, for: .normal)
+        appleButton.setTitle(text.appleButtonTitle, for: .normal)
+        emailTextField.placeholder = text.emailAdressTextField
+        passwordTextField.placeholder = text.passwordTextField
+        orLabel.text = text.orLabel
+        nohaveAccountLabel.text = text.noAccountLabel
+        toSignUpButton.setTitle(text.singUpLabel, for: .normal)
+        loginButton.setTitle(text.loginButtonTitle, for:.normal)
+        
+        
     }
 }
