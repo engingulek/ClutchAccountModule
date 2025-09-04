@@ -15,6 +15,14 @@ typealias Kits = UIViewAble & SegueAble  & NavigationDesing
 protocol ViewToPresenterLoginProtocol {
     var view : PresenterToViewLoginProtocol? {get}
     func viewDidLoad()
+    
+    func onTappedGoogleButton()
+    func onTappedAppleButton()
+    func onChangedEmailTextField(text:String?)
+    func onChangedPasswordTextField(text:String?)
+    func onTappedSingUpButton()
+    func onTappedLoginButton()
+    
 }
 
 

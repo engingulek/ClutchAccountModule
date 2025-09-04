@@ -9,10 +9,20 @@ import UIKit
 import SnapKit
 import ClutchCoreKit
 
+@MainActor
+protocol LoginViewDelegate: AnyObject {
+    func didTapAppleButton()
+    func didTapGoogleButton()
+    func didTapLoginButton()
+    func didTapSingUpButton()
+    func onChangeEmailTextFied(text:String?)
+    func onChagePasswordTextField(text:String?)
+}
+
 
 class LoginView : BaseView<LoginViewController> {
     
-    var presenter : ViewToPresenterLoginProtocol?
+    weak var delegate: LoginViewDelegate?
     
     private lazy var iconImage : UIImageView  = {
         let imageView = UIImageView()
@@ -50,15 +60,18 @@ class LoginView : BaseView<LoginViewController> {
     private lazy var googleButton = ButtonFactory.createButton(ofType: .buttonWithImageResource(image: .googleIcon, title: "", action: googleButtonAction, color: .black, backColor: .white))
     
     
-    private lazy var googleButtonAction : UIAction = UIAction { _ in
+    private lazy var googleButtonAction : UIAction = UIAction {[weak self] _ in
+        guard let self = self else {return}
+        self.delegate?.didTapGoogleButton()
         print("googleButtonAction")
      }
     
     private lazy var appleButton = ButtonFactory.createButton(
         ofType: .buttonWithImageResource(image: .appleIcon, title: "", action: appleButtonAction, color: .black, backColor: .white))
     
-    private lazy var appleButtonAction : UIAction = UIAction { _ in
-        print("apple button aciton")
+    private lazy var appleButtonAction : UIAction = UIAction {[weak self] _ in
+        guard let self = self else {return}
+        self.delegate?.didTapAppleButton()
     }
     
     
@@ -68,8 +81,11 @@ class LoginView : BaseView<LoginViewController> {
         tf.borderStyle = .roundedRect
         tf.autocapitalizationType = .none
         tf.layer.cornerRadius = 10
+        
         return tf
     }()
+    
+ 
     
  
     
@@ -78,6 +94,7 @@ class LoginView : BaseView<LoginViewController> {
         tf.autocapitalizationType = .none
         tf.borderStyle = .roundedRect
         tf.isSecureTextEntry = true
+        tf.tag = 1
         return tf
     }()
     
@@ -91,21 +108,27 @@ class LoginView : BaseView<LoginViewController> {
                                                                                      color: .black, action: toSignUpButtonAction))
     
     
-    private lazy var toSignUpButtonAction : UIAction = UIAction { _ in
+    private lazy var toSignUpButtonAction : UIAction = UIAction {[weak self] _ in
+        guard let self = self else {return}
+        self.delegate?.didTapSingUpButton()
         print("toSignButton")
      }
     
     private lazy var loginButton = ButtonFactory.createButton(ofType: .defaultButton(title: "", action: loginButtonAction))
     
     
-    private lazy var loginButtonAction : UIAction = UIAction { _ in
-        print("loginButtonAction")
+    private lazy var loginButtonAction : UIAction = UIAction { [weak self] _ in
+        guard let self = self else {return}
+        self.delegate?.didTapLoginButton()
      }
     
     override func setupView() {
         configureUI()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
+
     
     private func configureUI() {
         addSubview(iconImage)
@@ -233,7 +256,25 @@ class LoginView : BaseView<LoginViewController> {
         nohaveAccountLabel.text = text.noAccountLabel
         toSignUpButton.setTitle(text.singUpLabel, for: .normal)
         loginButton.setTitle(text.loginButtonTitle, for:.normal)
-        
-        
     }
+    
+    
+  
+}
+
+
+extension LoginView : UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        switch textField.tag {
+        case 0:
+            delegate?.onChangeEmailTextFied(text: textField.text)
+        case 1:
+            delegate?.onChagePasswordTextField(text: textField.text)
+        default:
+            break
+        }
+    }
+    
+    
+   
 }

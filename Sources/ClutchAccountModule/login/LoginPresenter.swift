@@ -18,8 +18,35 @@ final class LoginPresenter {
     
 }
 
-
 extension LoginPresenter : @preconcurrency ViewToPresenterLoginProtocol {
+ 
+    
+    func onTappedGoogleButton() {
+        
+    }
+    
+    func onTappedAppleButton() {
+        
+    }
+    
+    func onChangedEmailTextField(text: String?) {
+        
+    }
+    
+    func onChangedPasswordTextField(text: String?) {
+        
+    }
+    
+    func onTappedSingUpButton() {
+        
+    }
+    
+    func onTappedLoginButton() {
+        
+    }
+    
+   
+    
     
     func viewDidLoad() {
         

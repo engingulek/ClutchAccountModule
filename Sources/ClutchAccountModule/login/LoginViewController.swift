@@ -19,13 +19,15 @@ class LoginViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+        loginView.delegate = self
+       
       
    
     }
     
     override func loadView() {
-        loginView.presenter = presenter
         view = loginView
+        
     }
 
 }
@@ -35,9 +37,39 @@ extension LoginViewController : PresenterToViewLoginProtocol {
     func sendTextState(text:TextState) {
             loginView.getText(text)
     }
-    
-    
 }
+
+
+extension LoginViewController : LoginViewDelegate {
+   
+    
+    func didTapAppleButton() {
+        presenter.onTappedAppleButton()
+    }
+    
+    func didTapGoogleButton() {
+        presenter.onTappedGoogleButton()
+    }
+    
+    func didTapLoginButton() {
+        presenter.onTappedLoginButton()
+    }
+    
+    func didTapSingUpButton() {
+        presenter.onTappedSingUpButton()
+    }
+    
+    func onChangeEmailTextFied(text: String?) {
+        presenter.onChangedEmailTextField(text: text)
+    }
+    
+    func onChagePasswordTextField(text: String?) {
+        presenter.onChangedPasswordTextField(text: text)
+    }
+}
+
+
+
 
 
 #Preview {
