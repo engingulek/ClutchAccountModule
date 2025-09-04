@@ -11,7 +11,7 @@ import SnapKit
 import ClutchCoreKit
 
 class LoginViewController : UIViewController {
-    lazy var presenter : ViewToPresenterLoginProtocol = LoginPresenter(view: self)
+    lazy var presenter : ViewToPresenterLoginProtocol = LoginPresenter(view: self, interactor: LoginInteractor(), router: LoginRouter())
     private lazy var loginView = LoginView(self)
  
     

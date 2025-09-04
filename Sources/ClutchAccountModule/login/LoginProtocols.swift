@@ -12,6 +12,17 @@ import ClutchViewControllerAbleKit
 
 typealias Kits = UIViewAble & SegueAble  & NavigationDesing
 
+
+enum LoginResult {
+    case success(String)
+    case failure(LoginError)
+}
+
+enum LoginError {
+    case noneEmail
+    case wrongEmailOrPassword
+}
+
 protocol ViewToPresenterLoginProtocol {
     var view : PresenterToViewLoginProtocol? {get}
     func viewDidLoad()
@@ -33,15 +44,16 @@ protocol PresenterToViewLoginProtocol : AnyObject,Kits {
 
 
 protocol PresenterToInteractorLoginProtocol {
-    
+    func loginEmailAndPassword(email:String,password:String)
 }
 
 
 protocol InteractorToPresenterLoginProtocol {
+    func loginResult(result:LoginResult)
+
+}
+
+protocol PresenterToRouterLoginProtocol {
     
 }
 
-
-public protocol LoginRouterProtocol {
-    func createViewController() -> UIViewController
-}

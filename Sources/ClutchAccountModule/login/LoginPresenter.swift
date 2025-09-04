@@ -10,10 +10,14 @@
 @MainActor
 final class LoginPresenter {
     weak var view : PresenterToViewLoginProtocol?
+    private var interactor : PresenterToInteractorLoginProtocol
+    private var router : PresenterToRouterLoginProtocol
     private var textState: TextState  =  TextState()
     
-    init(view: PresenterToViewLoginProtocol?) {
+    init(view: PresenterToViewLoginProtocol?,interactor : PresenterToInteractorLoginProtocol,router : PresenterToRouterLoginProtocol) {
         self.view = view
+        self.interactor = interactor
+        self.router = router
     }
     
 }
@@ -52,6 +56,15 @@ extension LoginPresenter : @preconcurrency ViewToPresenterLoginProtocol {
         
         
         view?.sendTextState(text: textState)
+    }
+    
+    
+}
+
+
+extension LoginPresenter : @preconcurrency InteractorToPresenterLoginProtocol {
+    func loginResult(result: LoginResult) {
+        
     }
     
     
