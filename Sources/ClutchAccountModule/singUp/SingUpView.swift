@@ -1,28 +1,31 @@
 //
-//  LoginView.swift
+//  SingUpView.swift
 //  ClutchAccountModule
 //
-//  Created by Engin Gülek on 3.09.2025.
+//  Created by Engin Gülek on 6.09.2025.
 //
 
 import UIKit
 import SnapKit
 import ClutchCoreKit
 
+
 @MainActor
-protocol LoginViewDelegate: AnyObject {
+protocol SingUpViewDelegate: AnyObject {
     func didTapAppleButton()
     func didTapGoogleButton()
-    func didTapLoginButton()
     func didTapSingUpButton()
+    
+    func onChangeFirstNameTextFied(text:String?)
+    func onChageLastNameTextField(text:String?)
+    
     func onChangeEmailTextFied(text:String?)
     func onChagePasswordTextField(text:String?)
 }
 
 
-class LoginView : BaseView<LoginViewController> {
-    
-    weak var delegate: LoginViewDelegate?
+class SingUpView : BaseView<SingUpViewController> {
+    weak var delegate : SingUpViewDelegate?
     
     private lazy var iconImage : UIImageView  = {
         let imageView = UIImageView()
@@ -46,33 +49,61 @@ class LoginView : BaseView<LoginViewController> {
     }()
     
     
+    
     private lazy var appNameTitleLabel = LabelFactory.createLabel(ofType: .title,text: "")
     
-    private lazy var welcomemleLabel = LabelFactory.createLabel(ofType: .largeTitle, text: " ")
+    private lazy var singUpTitleleLabel = LabelFactory.createLabel(ofType: .largeTitle, text: " ")
     
     private lazy var subinfoLabel = LabelFactory.createLabel(ofType: .body, text: "")
-    
-    private lazy var emailLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
-    
-    private lazy var passwordLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
-  
     
     private lazy var googleButton = ButtonFactory.createButton(ofType: .buttonWithImageResource(image: .googleIcon, title: "", action: googleButtonAction, color: .black, backColor: .white))
     
     
     private lazy var googleButtonAction : UIAction = UIAction {[weak self] _ in
         guard let self = self else {return}
-        self.delegate?.didTapGoogleButton()
+        
         print("googleButtonAction")
-     }
+    }
     
     private lazy var appleButton = ButtonFactory.createButton(
         ofType: .buttonWithImageResource(image: .appleIcon, title: "", action: appleButtonAction, color: .black, backColor: .white))
     
     private lazy var appleButtonAction : UIAction = UIAction {[weak self] _ in
         guard let self = self else {return}
-        self.delegate?.didTapAppleButton()
+        
     }
+    
+    private lazy var orLabel = LabelFactory.createLabel(ofType: .body, text: "")
+    
+    private lazy var firstNameLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
+    
+    private lazy var lastNameLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
+    
+    private lazy var emailLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
+    
+    private lazy var passwordLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
+    
+    
+    private let firstNameTextField: UITextField = {
+        let tf = UITextField()
+        tf.keyboardType = .emailAddress
+        tf.borderStyle = .roundedRect
+        tf.autocapitalizationType = .none
+        tf.tag = 0
+        tf.layer.cornerRadius = 10
+        return tf
+    }()
+    
+    
+    private let lastNameTextField: UITextField = {
+        let tf = UITextField()
+        tf.keyboardType = .emailAddress
+        tf.borderStyle = .roundedRect
+        tf.autocapitalizationType = .none
+        tf.layer.cornerRadius = 10
+        tf.tag = 1
+        return tf
+    }()
     
     
     private let emailTextField: UITextField = {
@@ -81,7 +112,7 @@ class LoginView : BaseView<LoginViewController> {
         tf.borderStyle = .roundedRect
         tf.autocapitalizationType = .none
         tf.layer.cornerRadius = 10
-        tf.tag = 0
+        tf.tag = 2
         return tf
     }()
     
@@ -94,44 +125,24 @@ class LoginView : BaseView<LoginViewController> {
         tf.autocapitalizationType = .none
         tf.borderStyle = .roundedRect
         tf.isSecureTextEntry = true
-        tf.tag = 1
+        tf.tag = 3
         return tf
     }()
     
-    private lazy var orLabel = LabelFactory.createLabel(ofType: .body, text: "")
-
+    private lazy var singUpButton = ButtonFactory.createButton(ofType: .defaultButton(title: "", action: singUpButtonAction))
     
-    private lazy var nohaveAccountLabel = LabelFactory.createLabel(ofType: .subBody, text: "")
-  
-    
-    private lazy var toSignUpButton = ButtonFactory.createButton(ofType: .textButton(text: "",
-                                                                                     color: .black, action: toSignUpButtonAction))
-    
-    
-    private lazy var toSignUpButtonAction : UIAction = UIAction {[weak self] _ in
+    private lazy var singUpButtonAction : UIAction = UIAction { [weak self] _ in
         guard let self = self else {return}
-        self.delegate?.didTapSingUpButton()
-        
+       
      }
     
-    private lazy var loginButton = ButtonFactory.createButton(ofType: .defaultButton(title: "", action: loginButtonAction))
     
     
-    private lazy var loginButtonAction : UIAction = UIAction { [weak self] _ in
-        guard let self = self else {return}
-        self.delegate?.didTapLoginButton()
-     }
     
     override func setupView() {
         configureUI()
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        
-        googleButton.layer.borderColor = UIColor.lightGray.cgColor
-        appleButton.layer.borderColor = UIColor.lightGray.cgColor
+        subinfoLabel.numberOfLines = .zero
     }
-    
-
     
     private func configureUI() {
         addSubview(iconImage)
@@ -146,15 +157,16 @@ class LoginView : BaseView<LoginViewController> {
             make.left.equalTo(iconImage.snp.right).offset(8)
         }
         
-        addSubview(welcomemleLabel)
-        welcomemleLabel.snp.makeConstraints { make in
-            make.top.equalTo(iconImage.snp.bottom).offset(40)
+        addSubview(singUpTitleleLabel)
+        singUpTitleleLabel.snp.makeConstraints { make in
+            make.top.equalTo(iconImage.snp.bottom).offset(30)
             make.left.equalTo(snp.left).offset(20)
         }
         addSubview(subinfoLabel)
         subinfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(welcomemleLabel.snp.bottom).offset(8)
+            make.top.equalTo(singUpTitleleLabel.snp.bottom).offset(8)
             make.left.equalTo(snp.left).offset(20)
+            make.trailing.equalTo(snp.trailing).offset(-20)
         }
         
         let buttonStack = UIStackView(arrangedSubviews: [googleButton, appleButton])
@@ -169,6 +181,8 @@ class LoginView : BaseView<LoginViewController> {
             make.right.equalTo(snp.right).offset(-20)
             make.height.equalTo(50)
         }
+        googleButton.layer.borderColor = UIColor.lightGray.cgColor
+        appleButton.layer.borderColor = UIColor.lightGray.cgColor
         
         
         addSubview(orLabel)
@@ -194,9 +208,41 @@ class LoginView : BaseView<LoginViewController> {
             make.height.equalTo(1)
         }
         
+        addSubview(firstNameLabel)
+        firstNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(orLabel.snp.bottom).offset(20)
+            make.left.equalTo(snp.left).offset(20)
+        }
+        
+        addSubview(firstNameTextField)
+        firstNameTextField.snp.makeConstraints { make in
+            make.top.equalTo(firstNameLabel.snp.bottom).offset(10)
+            make.leading.equalTo(firstNameLabel.snp.leading)
+            
+            make.height.equalTo(50)
+            make.width.equalTo((UIScreen.main.bounds.width / 2) - 25)
+        }
+        
+        
+        addSubview(lastNameTextField)
+        lastNameTextField.snp.makeConstraints { make in
+            make.top.equalTo(firstNameTextField.snp.top)
+            make.trailing.equalTo(snp.trailing).offset(-20)
+            
+            make.height.equalTo(50)
+            make.width.equalTo((UIScreen.main.bounds.width / 2) - 25)
+        }
+        
+        addSubview(lastNameLabel)
+        lastNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(orLabel.snp.bottom).offset(20)
+            make.trailing.equalTo(lastNameTextField.snp.trailing)
+            make.leading.equalTo(lastNameTextField.snp.leading)
+        }
+        
         addSubview(emailLabel)
         emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(orLabel.snp.bottom).offset(20)
+            make.top.equalTo(lastNameTextField.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(20)
         }
         
@@ -221,63 +267,33 @@ class LoginView : BaseView<LoginViewController> {
             make.height.equalTo(44)
         }
         
-        addSubview(loginButton)
-        loginButton.snp.makeConstraints { make in
+        
+        addSubview(singUpButton)
+        singUpButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(25)
             make.trailing.equalToSuperview().offset(-25)
             make.height.equalTo(50)
             
         }
-        
-        addSubview(nohaveAccountLabel)
-        
-        let container = UIStackView(arrangedSubviews: [nohaveAccountLabel, toSignUpButton])
-        container.axis = .horizontal
-        container.spacing = 4
-        container.alignment = .center
-        addSubview(container)
-
-        container.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
-        }
     }
     
     
     func getText(_ text:TextState) {
         appNameTitleLabel.text = text.appName
-        welcomemleLabel.text = text.loginTitle
-        subinfoLabel.text = text.loginSubTitle
-        emailLabel.text = text.emailAdressTitle
-        passwordLabel.text = text.passwordTitle
+        singUpTitleleLabel.text = text.singUpPageTitle
+        subinfoLabel.text = text.singUpPageSubTitle
         googleButton.setTitle(text.googleButtonTitle, for: .normal)
         appleButton.setTitle(text.appleButtonTitle, for: .normal)
-        emailTextField.placeholder = text.emailAdressTextField
-        passwordTextField.placeholder = text.passwordTextField
         orLabel.text = text.orLabel
-        nohaveAccountLabel.text = text.noAccountLabel
-        toSignUpButton.setTitle(text.singUpLabel, for: .normal)
-        loginButton.setTitle(text.loginButtonTitle, for:.normal)
+        firstNameLabel.text = text.firstName
+        firstNameTextField.placeholder = text.firstName
+        lastNameLabel.text = text.lastName
+        lastNameTextField.placeholder = text.lastName
+        emailLabel.text = text.emailAdressTitle
+        emailTextField.placeholder = text.emailAdressTextField
+        passwordLabel.text = text.passwordTitle
+        passwordTextField.placeholder = text.passwordTextField
+        singUpButton.setTitle(text.singUpLabel, for: .normal)
     }
-    
-    
-  
-}
-
-
-extension LoginView : UITextFieldDelegate {
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        switch textField.tag {
-        case 0:
-            delegate?.onChangeEmailTextFied(text: textField.text)
-        case 1:
-            delegate?.onChagePasswordTextField(text: textField.text)
-        default:
-            break
-        }
-    }
-    
-    
-   
 }

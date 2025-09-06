@@ -23,6 +23,11 @@ final class LoginPresenter {
 }
 
 extension LoginPresenter : @preconcurrency ViewToPresenterLoginProtocol {
+    
+    
+    func viewDidLoad() {
+        view?.sendTextState(text: textState)
+    }
  
     
     func onTappedGoogleButton() {
@@ -42,22 +47,12 @@ extension LoginPresenter : @preconcurrency ViewToPresenterLoginProtocol {
     }
     
     func onTappedSingUpButton() {
-        
+        router.toSingUpScreen(view: view)
     }
     
     func onTappedLoginButton() {
         
     }
-    
-   
-    
-    
-    func viewDidLoad() {
-        
-        
-        view?.sendTextState(text: textState)
-    }
-    
     
 }
 
