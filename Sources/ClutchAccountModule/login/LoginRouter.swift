@@ -18,7 +18,7 @@ class LoginRouter {
         viewController.presenter = presenter
         interactor.presenter = presenter
         
-        return UINavigationController(rootViewController: viewController)
+        return viewController
     }
 }
 
