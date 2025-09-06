@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.7.1"),
         .package(url: "https://github.com/engingulek/ClutchViewControllerAbleKit", from: "0.0.2"),
-        .package(url: "https://github.com/engingulek/ClutchCoreKit", from: "0.1.7")
+        .package(url: "https://github.com/engingulek/ClutchCoreKit", from: "0.1.8")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
