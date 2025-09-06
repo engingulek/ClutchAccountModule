@@ -18,11 +18,16 @@ class LoginRouter {
         viewController.presenter = presenter
         interactor.presenter = presenter
         
-        return viewController
+        return UINavigationController(rootViewController: viewController)
     }
 }
 
 
-extension LoginRouter : PresenterToRouterLoginProtocol {
+extension LoginRouter : @preconcurrency PresenterToRouterLoginProtocol {
+    func toSingUpScreen(view: (any PresenterToViewLoginProtocol)?) {
+        let viewController = SingUpRouter.createLoginViewController()
+        view?.pushViewControllerAble(viewController, animated: true)
+    }
+    
     
 }

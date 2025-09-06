@@ -111,7 +111,7 @@ class LoginView : BaseView<LoginViewController> {
     private lazy var toSignUpButtonAction : UIAction = UIAction {[weak self] _ in
         guard let self = self else {return}
         self.delegate?.didTapSingUpButton()
-        print("toSignButton")
+        
      }
     
     private lazy var loginButton = ButtonFactory.createButton(ofType: .defaultButton(title: "", action: loginButtonAction))

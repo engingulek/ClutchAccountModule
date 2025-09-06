@@ -54,6 +54,6 @@ protocol InteractorToPresenterLoginProtocol {
 }
 
 protocol PresenterToRouterLoginProtocol {
-    
+    func toSingUpScreen(view:PresenterToViewLoginProtocol?)
 }
 

@@ -47,17 +47,12 @@ extension LoginPresenter : @preconcurrency ViewToPresenterLoginProtocol {
     }
     
     func onTappedSingUpButton() {
-        
+        router.toSingUpScreen(view: view)
     }
     
     func onTappedLoginButton() {
         
     }
-    
-   
-    
-  
-    
     
 }
 
