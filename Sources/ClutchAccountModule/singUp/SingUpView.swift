@@ -10,7 +10,23 @@ import SnapKit
 import ClutchCoreKit
 
 
+@MainActor
+protocol SingUpViewDelegate: AnyObject {
+    func didTapAppleButton()
+    func didTapGoogleButton()
+    func didTapSingUpButton()
+    
+    func onChangeFirstNameTextFied(text:String?)
+    func onChageLastNameTextField(text:String?)
+    
+    func onChangeEmailTextFied(text:String?)
+    func onChagePasswordTextField(text:String?)
+}
+
+
 class SingUpView : BaseView<SingUpViewController> {
+    weak var delegate : SingUpViewDelegate?
+    
     private lazy var iconImage : UIImageView  = {
         let imageView = UIImageView()
         imageView.image = UIImage(resource: .appIcon)

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import ClutchViewControllerAbleKit
 
-typealias Kits = UIViewAble & SegueAble  & NavigationDesing
+typealias LoginKits = UIViewAble & SegueAble  & NavigationDesing
 
 
 enum LoginResult {
@@ -38,7 +38,7 @@ protocol ViewToPresenterLoginProtocol {
 
 
 
-protocol PresenterToViewLoginProtocol : AnyObject,Kits {
+protocol PresenterToViewLoginProtocol : AnyObject,LoginKits {
     func sendTextState(text:TextState)
 }
 
