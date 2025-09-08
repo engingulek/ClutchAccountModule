@@ -1,0 +1,69 @@
+{
+  "originHash" : "08ea5304f4bba663a5ecf17313c62a6656dd1a2999c02ab16dee40763d003866",
+  "pins" : [
+    {
+      "identity" : "clutchcorekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/engingulek/ClutchCoreKit",
+      "state" : {
+        "revision" : "3f13896c0cbd001e5e90ea0696e5a45488ea9bb8",
+        "version" : "0.1.8"
+      }
+    },
+    {
+      "identity" : "clutchmodularprotocols",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/engingulek/ClutchModularProtocols",
+      "state" : {
+        "revision" : "9d2e6d0884a26be3fd67f98f8bc114fcd1018a53",
+        "version" : "0.0.3"
+      }
+    },
+    {
+      "identity" : "clutchnavigationkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/engingulek/ClutchNavigationKit",
+      "state" : {
+        "revision" : "21a6eb0fb1088208e1da6589e2efa14c6f678c49",
+        "version" : "0.0.4"
+      }
+    },
+    {
+      "identity" : "clutchviewcontrollerablekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/engingulek/ClutchViewControllerAbleKit",
+      "state" : {
+        "revision" : "6806ea3280bd6c4ad6422ddba106ae793f0e3154",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "hpdependencykit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/engingulek/HPDependencyKit",
+      "state" : {
+        "revision" : "c9305c28ff55ad6eb257fbcfd014f49be7d8f47a",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit",
+      "state" : {
+        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
+        "version" : "5.7.1"
+      }
+    },
+    {
+      "identity" : "swinject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Swinject/Swinject.git",
+      "state" : {
+        "revision" : "b685b549fe4d8ae265fc7a2f27d0789720425d69",
+        "version" : "2.10.0"
+      }
+    }
+  ],
+  "version" : 3
+}
