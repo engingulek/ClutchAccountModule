@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import ClutchModularProtocols
+import ClutchNavigationKit
+import SwiftUI
 @MainActor
 
 class SingUpRouter {
+    @EnvironmentObject var navigation:Navigation
     static func createLoginViewController() -> UIViewController {
         let viewController = SingUpViewController()
         let router = SingUpRouter()
@@ -25,6 +29,14 @@ class SingUpRouter {
 }
 
 
-extension SingUpRouter : PresenterToRouterSingUpProtocol {
-    
+extension SingUpRouter : @preconcurrency PresenterToRouterSingUpProtocol {
+    func toSelectFavTeamScreen(view:PresenterToViewSingUpProtocol?) {
+        
+        let selectFavTeamView = navigation.build(page: .selectFavTeam)
+        
+        let hostingController = UIHostingController(rootView: selectFavTeamView)
+        
+        view?.pushViewControllerAble(hostingController, animated: true)
+        
+    }
 }

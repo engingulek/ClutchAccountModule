@@ -56,7 +56,7 @@ protocol InteractorToPresenterSingUpProtocol {
 }
 
 protocol PresenterToRouterSingUpProtocol {
-    
+    func toSelectFavTeamScreen(view:PresenterToViewSingUpProtocol?)
 }
 
 
