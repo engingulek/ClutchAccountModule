@@ -12,7 +12,7 @@ import SwiftUI
 @MainActor
 
 class SingUpRouter {
-    @EnvironmentObject var navigation:Navigation
+    let navigation = Navigation()
     static func createLoginViewController() -> UIViewController {
         let viewController = SingUpViewController()
         let router = SingUpRouter()
