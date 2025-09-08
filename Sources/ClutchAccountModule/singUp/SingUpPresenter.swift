@@ -60,6 +60,7 @@ extension SingUpPresenter :  @preconcurrency  ViewToPresenterSingUpProtocol {
     
     func onTappedSingUpButton() {
         router.toSelectFavTeamScreen(view: view)
+        print("testt")
     }
     
 }

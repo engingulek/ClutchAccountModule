@@ -133,6 +133,7 @@ class SingUpView : BaseView<SingUpViewController> {
     
     private lazy var singUpButtonAction : UIAction = UIAction { [weak self] _ in
         guard let self = self else {return}
+        delegate?.didTapSingUpButton()
        
      }
     
